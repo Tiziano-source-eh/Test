@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>IkonAI – AI Agents für Unternehmen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IkonAI entwickelt AI Agents für Unternehmen – smarte digitale Mitarbeiter, die rund um die Uhr arbeiten." />
+  <style>
+    :root {
+      --bg-dark: #02142b;
+      --bg-dark-alt: #062247;
+      --accent: #1e90ff;
+      --accent-soft: #3ca2ff;
+      --text-light: #f5f7fb;
+      --text-muted: #c1c7d6;
+      --card-bg: #0b1f3a;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --transition-fast: 0.2s ease-out;
+      --max-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #073270, #02142b 55%);
+      color: var(--text-light);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border-soft);
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(2, 20, 43, 0.95), rgba(2, 20, 43, 0.8));
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #ffffff, #bfc9ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+
+    .logo-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      font-size: 1.2rem;
+    }
+
+    .logo-text-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 0.94rem;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      padding: 6px 10px;
+      border-radius: 999px;
+      transition: color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-1px);
+    }
+
+    .nav-cta {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.7);
+      opacity: 0.95;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 30px;
+      align-items: center;
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent-soft);
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 3vw, 2.7rem);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(12, 101, 255, 0.16);
+      border: 1px solid rgba(90, 160, 255, 0.5);
+      color: var(--accent-soft);
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 22px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.96rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.7);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.8);
+      opacity: 0.96;
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      background: rgba(5, 19, 46, 0.8);
+      color: var(--text-light);
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast), opacity var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(9, 32, 79, 0.9);
+      border-color: rgba(255, 255, 255, 0.6);
+      transform: translateY(-1px);
+      opacity: 0.96;
+    }
+
+    .hero-note {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top left, #123a7d, #04152e);
+      border-radius: var(--radius-xl);
+      padding: 20px 22px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top, rgba(255, 255, 255, 0.12), transparent 55%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .hero-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .hero-card-main {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .hero-card-list {
+      list-style: none;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: grid;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .hero-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.78rem;
+    }
+
+    .chip {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(3, 9, 25, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--text-muted);
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: 16px;
+    }
+
+    .section-intro {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+      max-width: 620px;
+    }
+
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(10, 27, 58, 0.98), rgba(4, 12, 32, 0.98));
+      border-radius: var(--radius-lg);
+      padding: 18px 18px 16px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+    }
+
+    .card h3 {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .vision {
+      background: radial-gradient(circle at top left, #0d2a5c, #020a19 55%);
+      border-radius: var(--radius-xl);
+      padding: 24px 22px 22px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .vision h2 {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .vision p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .vision p:last-child {
+      margin-bottom: 0;
+    }
+
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .package-card {
+      background: radial-gradient(circle at top, #123a7d, #04152e);
+      border-radius: var(--radius-xl);
+      padding: 20px 18px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .package-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .package-title {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .package-price {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--accent-soft);
+    }
+
+    .package-list {
+      list-style: none;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .package-list li {
+      margin-bottom: 4px;
+    }
+
+    .package-cta {
+      margin-top: auto;
+      padding-top: 8px;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
+
+    .contact-box {
+      background: linear-gradient(135deg, #0b1f3a, #050e1f);
+      border-radius: var(--radius-xl);
+      padding: 20px 20px 18px;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.94rem;
+    }
+
+    .contact-box h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .contact-details {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .contact-details p {
+      margin-bottom: 3px;
+    }
+
+    .contact-note {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--border-soft);
+      padding: 16px 20px 18px;
+      margin-top: 20px;
+      background: linear-gradient(to top, #010712, rgba(1, 10, 24, 0.95));
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      padding: 2px 0;
+      border-bottom: 1px solid transparent;
+      transition: border-color var(--transition-fast), color var(--transition-fast);
+    }
+
+    .footer-links a:hover {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-brand span {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: #0b1f3a;
+      color: #f5f7fb;
+      max-width: 900px;
+      max-height: 80vh;
+      width: 95%;
+      border-radius: 18px;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .modal-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .modal-header h2 {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    .modal-close {
+      border: none;
+      background: transparent;
+      color: #f5f7fb;
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .modal-body {
+      padding: 14px 18px 18px;
+      overflow-y: auto;
+      font-size: 0.94rem;
+    }
+
+    .modal-body h3 {
+      font-size: 1.02rem;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+
+    .modal-body p {
+      margin: 4px 0;
+      line-height: 1.6;
+    }
+
+    .modal-body ul {
+      margin: 6px 0 10px 18px;
+      padding: 0;
+    }
+
+    .modal-body li {
+      margin-bottom: 4px;
+    }
+
+    .modal-body a {
+      color: #a9c8ff;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-card {
+        order: -1;
+      }
+      .cards-3,
+      .packages-grid,
+      .contact {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .nav-links {
+        display: none;
+      }
+      header {
+        position: static;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .section {
+        padding-inline: 16px;
+      }
+      .hero-title {
+        font-size: 2rem;
+      }
+      .hero-card {
+        padding: 18px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="nav">
+      <div class="logo-wrap">
+        <div class="logo-icon">
+          <!-- WICHTIG: Speichere dein Logo als „ikonai-logo.png“ im selben Ordner -->
+          <img src="IkonAI-Logo.png" alt="IkonAI Logo" />
+        </div>
+        <div>
+          <div class="logo-text-main">IkonAI</div>
+          <div class="logo-text-sub">AI Agents für Unternehmen</div>
+        </div>
+      </div>
+      <nav class="nav-links" aria-label="Hauptnavigation">
+        <a href="#start">Start</a>
+        <a href="#vision">Vision</a>
+        <a href="#vorteile">Vorteile</a>
+        <a href="#produkt">AI Chatbot</a>
+        <a href="#pakete">Pakete</a>
+        <a href="#kontakt">Kontakt</a>
+      </nav>
+      <a class="nav-cta" href="mailto:Tiziano@ikonai.de">Kontakt per E-Mail</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="section" id="start">
+      <div class="hero">
+        <div>
+          <div class="hero-eyebrow">IkonAI</div>
+          <h1 class="hero-title">
+            AI Agents, die für dein Unternehmen mehr tun als nur Fragen beantworten.
+          </h1>
+          <p class="hero-subtitle">
+            Smarte digitale Mitarbeiter, die Prozesse automatisieren, Anfragen beantworten und dir spürbar mehr Zeit, geringere Kosten und einen Wettbewerbsvorteil verschaffen.
+          </p>
+          <div class="hero-badge">
+            Bereitstellung in 3–5 Tagen · 0&nbsp;% technisches Wissen nötig
+          </div>
+          <div class="hero-actions">
+            <a href="mailto:Tiziano@ikonai.de" class="btn-primary">Unverbindlich anfragen</a>
+            <a href="#pakete" class="btn-ghost">Pakete ansehen</a>
+          </div>
+          <p class="hero-note">
+            Ich baue keine Bots. Ich baue smarte Mitarbeiter, die rund um die Uhr arbeiten und dein Unternehmen nachhaltig stärken.
+          </p>
+        </div>
+        <aside class="hero-card" aria-label="Überblick">
+          <div class="hero-card-inner">
+            <div class="hero-card-title">Überblick</div>
+            <div class="hero-card-main">AI Agents für Unternehmen</div>
+            <ul class="hero-card-list">
+              <li>Automatisierte Kundenkommunikation</li>
+              <li>Entlastung deines Teams</li>
+              <li>Digitale Mitarbeiter statt einfache Bots</li>
+            </ul>
+            <div class="hero-chip-row">
+              <span class="chip">24/7 im Einsatz</span>
+              <span class="chip">maßgeschneidert</span>
+              <span class="chip">für Unternehmen</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Vision -->
+    <section class="section" id="vision">
+      <div class="vision">
+        <h2>Meine Vision</h2>
+        <p>
+          Ich entwickle KI-Agents, die für Unternehmen mehr tun als nur Fragen beantworten.
+          Meine Vision ist es, jedem Kunden spürbar mehr Zeit, geringere Kosten und einen echten Wettbewerbsvorteil zu verschaffen.
+        </p>
+        <p>
+          Ein KI-Agent soll sich nicht „lohnen“ müssen – er soll sich von selbst auszahlen.
+          Indem er wiederkehrende Aufgaben übernimmt, sofort auf Anfragen reagiert und Prozesse automatisiert, schafft er Freiraum für das, was wirklich zählt:
+          Wachstum, Qualität und bessere Kundenerlebnisse.
+        </p>
+        <p>
+          Mein Ziel ist, dass jeder Kunde durch den Einsatz meiner KI-Lösungen nachweisbar profitiert – weniger Aufwand, weniger Stress, mehr Fokus, mehr Umsatzpotenzial.
+        </p>
+        <p>
+          Ich baue keine Bots. Ich baue smarte Mitarbeiter, die rund um die Uhr arbeiten und das Unternehmen nachhaltig stärken.
+        </p>
+      </div>
+    </section>
+
+    <!-- Vorteile -->
+    <section class="section" id="vorteile">
+      <h2 class="section-title">Vorteile eines AI Agent</h2>
+      <p class="section-intro">
+        Ein AI Agent ist mehr als ein Chatfenster. Er übernimmt Aufgaben, arbeitet selbstständig und unterstützt dein Unternehmen wie ein zusätzlicher Mitarbeiter.
+      </p>
+      <div class="cards-3">
+        <div class="card">
+          <h3>Automatisierung</h3>
+          <p>
+            Der AI Agent arbeitet selbstständig und rund um die Uhr, ohne dass du eingreifen musst.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Effizienz</h3>
+          <p>
+            AI Agents sind schneller und fehlerfreier als Menschen, was sie zu einer hochwertigen Lösung für Unternehmen macht.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Skalierbarkeit</h3>
+          <p>
+            Ein AI Agent ersetzt die Arbeit von mehreren Vollzeitkräften, was zu Kosten- und Zeitersparnissen für das Unternehmen führt.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Produkt: AI Chatbot -->
+    <section class="section" id="produkt">
+      <h2 class="section-title">Startprodukt: AI Chatbot</h2>
+      <p class="section-intro">
+        Ich starte mit einem individuell angepassten AI Chatbot als erstem AI Agent in deinem Unternehmen.
+        Der Chatbot wird mit deinen FAQs und Leistungsdaten trainiert und lässt sich mit einem Einbett-Code in nur 1–2 Minuten integrieren.
+      </p>
+    </section>
+
+    <!-- Pakete -->
+    <section class="section" id="pakete">
+      <h2 class="section-title">Pakete</h2>
+      <p class="section-intro">
+        Wähle das Modell, das am besten zu deinem Unternehmen passt. Alle Pakete beinhalten eine individuelle Anpassung, Training mit deinen Inhalten und eine kurze Einweisung.
+      </p>
+
+      <div class="packages-grid">
+        <!-- Paket 1 -->
+        <article class="package-card">
+          <div>
+            <div class="package-label">AI Chatbot</div>
+            <h3 class="package-title">Einmaliger Kauf</h3>
+            <div class="package-price">1.250&nbsp;€</div>
+            <ul class="package-list">
+              <li>Individuelle Anpassung an ihr Unternehmen</li>
+              <li>Einbett-Code und Schritt für Schritt Anleitung oder Hilfe von mir (dauert nur 1–2 Minuten)</li>
+              <li>Training mit ihren FAQs/Leistungsdaten</li>
+              <li>Übergabe inkl. kurzer Einweisung</li>
+              <li>0&nbsp;% technisches Wissen nötig</li>
+            </ul>
+          </div>
+          <div class="package-cta">
+            <a href="mailto:Tiziano@ikonai.de?subject=Anfrage%20AI%20Chatbot%20Einmaliger%20Kauf" class="btn-primary">Paket anfragen</a>
+          </div>
+        </article>
+
+        <!-- Paket 2 -->
+        <article class="package-card">
+          <div>
+            <div class="package-label">AI Chatbot</div>
+            <h3 class="package-title">Monatliches Abo</h3>
+            <div class="package-price">Individueller Preis, ab 150&nbsp;€ monatlich</div>
+            <ul class="package-list">
+              <li>Individuelle Anpassung an ihr Unternehmen</li>
+              <li>Einbett-Code und Schritt für Schritt Anleitung oder Hilfe von mir (dauert nur 1–2 Minuten)</li>
+              <li>Training mit ihren FAQs/Leistungsdaten</li>
+              <li>Übergabe inkl. kurzer Einweisung</li>
+              <li>0&nbsp;% technisches Wissen nötig</li>
+              <li>Monatliche Anpassung verfügbar</li>
+              <li>Jederzeit kündbar</li>
+              <li>Für alle Fragen und Hilfe da</li>
+            </ul>
+          </div>
+          <div class="package-cta">
+            <a href="mailto:Tiziano@ikonai.de?subject=Anfrage%20AI%20Chatbot%20Monatliches%20Abo" class="btn-primary">Paket anfragen</a>
+          </div>
+        </article>
+
+        <!-- Paket 3 -->
+        <article class="package-card">
+          <div>
+            <div class="package-label">AI Chatbot</div>
+            <h3 class="package-title">Einmaliger Kauf + 12 Monate Anpassung</h3>
+            <div class="package-price">Individueller Preis: 2.500–3.500&nbsp;€</div>
+            <ul class="package-list">
+              <li>Individuelle Anpassung an ihr Unternehmen</li>
+              <li>Einbett-Code und Schritt für Schritt Anleitung oder Hilfe von mir (dauert nur 1–2 Minuten)</li>
+              <li>Training mit ihren FAQs/Leistungsdaten</li>
+              <li>Übergabe inkl. kurzer Einweisung</li>
+              <li>0&nbsp;% technisches Wissen nötig</li>
+              <li>Mehrere monatliche Anpassungen verfügbar</li>
+              <li>Jederzeit eine Verlängerung möglich</li>
+              <li>Für alle Fragen und Hilfe da</li>
+            </ul>
+          </div>
+          <div class="package-cta">
+            <a href="mailto:Tiziano@ikonai.de?subject=Anfrage%20AI%20Chatbot%20mit%20Anpassung%2012%20Monate" class="btn-primary">Paket anfragen</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section class="section" id="kontakt">
+      <div class="contact">
+        <div>
+          <h2 class="section-title">Kontakt</h2>
+          <p class="section-intro">
+            Bei Interesse oder Fragen dürfen Sie mich jederzeit per E-Mail kontaktieren.
+            Ich melde mich schnellstmöglich zurück.
+          </p>
+          <div class="contact-box">
+            <h3>Adresse &amp; Kontakt</h3>
+            <div class="contact-details">
+              <p>IkonAI</p>
+              <p>Theodor-Heuss-Str. 24</p>
+              <p>97980 Bad Mergentheim</p>
+              <p>Tel: 07931-94826400</p>
+              <p>E-Mail: <a href="mailto:Tiziano@ikonai.de">Tiziano@ikonai.de</a></p>
+            </div>
+            <a href="mailto:Tiziano@ikonai.de" class="btn-primary">Jetzt per E-Mail schreiben</a>
+            <p class="contact-note">
+              Sie benötigen kein technisches Vorwissen – alles Wichtige wird verständlich erklärt.
+            </p>
+          </div>
+        </div>
+        <div>
+          <p class="section-intro">
+            Gemeinsam finden wir heraus, welcher AI Agent für Ihr Unternehmen am meisten Sinn macht.
+            Von der ersten Idee bis zur Umsetzung begleite ich Sie persönlich.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span>IkonAI</span>
+        <span>· AI Agents für Unternehmen</span>
+      </div>
+      <div class="footer-links">
+        <a href="#start">Start</a>
+        <a href="#vision">Vision</a>
+        <a href="#vorteile">Vorteile</a>
+        <a href="#pakete">Pakete</a>
+        <a href="#kontakt">Kontakt</a>
+        <a id="link-impressum">Impressum</a>
+        <a id="link-datenschutz">Datenschutzerklärung</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- MODAL: Impressum -->
+<div class="modal-overlay" id="modal-impressum">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Impressum</h2>
+      <button class="modal-close" data-close>&times;</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Gesetzliche Anbieterkennung:</strong></p>
+      <p>Michael Kitzberger<br />
+      KITZEmedia<br />
+      Theodor-Heuss-Str. 24<br />
+      97980 Bad Mergentheim<br />
+      Deutschland</p>
+
+      <p>Telefon: 0049 (0)7931 94826400<br />
+      E-Mail: info@kitze-media.de</p>
+
+      <p>USt-IdNr.: DE290868212</p>
+
+      <p>Wir sind seit 14.05.2018 Mitglied der Initiative „FairCommerce“.<br />
+      Nähere Informationen hierzu finden Sie unter www.fair-commerce.de.</p>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Datenschutzerklärung -->
+<div class="modal-overlay" id="modal-datenschutz">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Datenschutzerklärung</h2>
+      <button class="modal-close" data-close>&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Soweit nachstehend keine anderen Angaben gemacht werden, ist die Bereitstellung Ihrer personenbezogenen Daten weder gesetzlich oder vertraglich vorgeschrieben, noch für einen Vertragsabschluss erforderlich. Sie sind zur Bereitstellung der Daten nicht verpflichtet. Eine Nichtbereitstellung hat keine Folgen. Dies gilt nur soweit bei den nachfolgenden Verarbeitungsvorgängen keine anderweitige Angabe gemacht wird.</p>
+      <p>„Personenbezogene Daten“ sind alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person beziehen.</p>
+
+      <h3>Server-Logfiles</h3>
+      <p>Sie können unsere Webseiten besuchen, ohne Angaben zu Ihrer Person zu machen.</p>
+      <p>Bei jedem Zugriff auf unsere Website werden an uns oder unseren Webhoster / IT-Dienstleister Nutzungsdaten durch Ihren Internet Browser übermittelt und in Protokolldaten (sog. Server-Logfiles) gespeichert. Zu diesen gespeicherten Daten gehören z.B. der Name der aufgerufenen Seite, Datum und Uhrzeit des Abrufs, die IP-Adresse, die übertragene Datenmenge und der anfragende Provider.</p>
+      <p>Die Verarbeitung erfolgt auf Grundlage des Art. 6 Abs. 1 lit. f DSGVO aus unserem überwiegenden berechtigten Interesse an der Gewährleistung eines störungsfreien Betriebs unserer Website sowie zur Verbesserung unseres Angebotes.</p>
+
+      <h3>Kontakt</h3>
+      <p><strong>Verantwortlicher</strong><br />
+      Kontaktieren Sie uns auf Wunsch. Verantwortlicher für die Datenverarbeitung ist: Michael Kitzberger, Theodor-Heuss-Str. 24, 97980 Bad Mergentheim Deutschland, 07931 94826400, info@kitze-media.de</p>
+
+      <h3>Initiativ-Kontaktaufnahme des Kunden per E-Mail</h3>
+      <p>Wenn Sie per E-Mail initiativ mit uns in Geschäftskontakt treten, erheben wir Ihre personenbezogenen Daten (Name, E-Mail-Adresse, Nachrichtentext) nur in dem von Ihnen zur Verfügung gestellten Umfang. Die Datenverarbeitung dient der Bearbeitung und Beantwortung Ihrer Kontaktanfrage.</p>
+      <p>Wenn die Kontaktaufnahme der Durchführung vorvertraglichen Maßnahmen (bspw. Beratung bei Kaufinteresse, Angebotserstellung) dient oder einen bereits zwischen Ihnen und uns geschlossenen Vertrag betrifft, erfolgt diese Datenverarbeitung auf Grundlage des Art. 6 Abs. 1 lit. b DSGVO.</p>
+      <p>Erfolgt die Kontaktaufnahme aus anderen Gründen, erfolgt diese Datenverarbeitung auf Grundlage des Art. 6 Abs. 1 lit. f DSGVO aus unserem überwiegenden berechtigten Interesse an der Bearbeitung und Beantwortung Ihrer Anfrage. In diesem Fall haben Sie das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit dieser auf Art. 6 Abs. 1 lit. f DSGVO beruhenden Verarbeitungen Sie betreffender personenbezogener Daten zu widersprechen.</p>
+      <p>Ihre E-Mail-Adresse nutzen wir nur zur Bearbeitung Ihrer Anfrage. Ihre Daten werden anschließend unter Beachtung gesetzlicher Aufbewahrungsfristen gelöscht, sofern Sie der weitergehenden Verarbeitung und Nutzung nicht zugestimmt haben.</p>
+
+      <h3>Cookies</h3>
+      <p>Unsere Website verwendet Cookies. Cookies sind kleine Textdateien, die im Internetbrowser bzw. vom Internetbrowser auf dem Computersystem eines Nutzers gespeichert werden. Ruft ein Nutzer eine Website auf, so kann ein Cookie auf dem Betriebssystem des Nutzers gespeichert werden. Dieser Cookie enthält eine charakteristische Zeichenfolge, die eine eindeutige Identifizierung des Browsers beim erneuten Aufrufen der Website ermöglicht.</p>
+      <p>Cookies werden auf Ihrem Rechner gespeichert. Daher haben Sie die volle Kontrolle über die Verwendung von Cookies. Durch die Auswahl entsprechender technischer Einstellungen in Ihrem Internetbrowser können Sie vor dem Setzen von Cookies benachrichtigt werden und über die Annahme einzeln entscheiden sowie die Speicherung der Cookies und Übermittlung der enthaltenen Daten verhindern. Bereits gespeicherte Cookies können jederzeit gelöscht werden. Wir weisen Sie jedoch darauf hin, dass Sie dann gegebenenfalls nicht sämtliche Funktionen dieser Website vollumfänglich nutzen können.</p>
+      <p>Unter den nachstehenden Links können Sie sich informieren, wie Sie die Cookies bei den wichtigsten Browsern verwalten (u.a. auch deaktivieren) können:</p>
+      <ul>
+        <li>Chrome: <a href="https://support.google.com/accounts/answer/61416?hl=de">https://support.google.com/accounts/answer/61416?hl=de</a></li>
+        <li>Microsoft Edge: <a href="https://support.microsoft.com/de-de/microsoft-edge/cookies-in-microsoft-edge-lB6schen-63947406-40ac-c3b8-57b9-2a946a29ae09">Support-Seite Microsoft Edge</a></li>
+        <li>Mozilla Firefox: <a href="https://support.mozilla.org/de/kb/cookies-erlauben-und-ablehnen">https://support.mozilla.org/de/kb/cookies-erlauben-und-ablehnen</a></li>
+        <li>Safari: <a href="https://support.apple.com/de-de/guide/safari/manage-cookies-and-website-data-sfri11471/mac">https://support.apple.com/de-de/guide/safari/manage-cookies-and-website-data-sfri11471/mac</a></li>
+      </ul>
+
+      <h3>Technisch notwendige Cookies</h3>
+      <p>Soweit nachstehend in der Datenschutzerklärung keine anderen Angaben gemacht werden setzen wir nur diese technisch notwendigen Cookies zu dem Zweck ein, unser Angebot nutzerfreundlicher, effektiver und sicherer zu machen. Des Weiteren ermöglichen Cookies unseren Systemen, Ihren Browser auch nach einem Seitenwechsel zu erkennen und Ihnen Services anzubieten. Einige Funktionen unserer Internetseite können ohne den Einsatz von Cookies nicht angeboten werden. Für diese ist es erforderlich, dass der Browser auch nach einem Seitenwechsel wiedererkannt wird.</p>
+      <p>Die Nutzung von Cookies oder vergleichbarer Technologien erfolgt auf Grundlage des § 25 Abs. 2 TDDDG. Die Verarbeitung Ihrer personenbezogenen Daten erfolgt auf Grundlage des Art. 6 Abs. 1 lit. f DSGVO aus unserem überwiegenden berechtigten Interesse an der Gewährleistung der optimalen Funktionalität der Website sowie einer nutzerfreundlichen und effektiven Gestaltung unseres Angebots.</p>
+      <p>Sie haben das Recht aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit dieser Verarbeitung Sie betreffender personenbezogener Daten zu widersprechen.</p>
+
+      <h3>Betroffenenrechte und Speicherdauer</h3>
+      <p><strong>Dauer der Speicherung</strong><br />
+      Die Daten werden unter Berücksichtigung gesetzlicher Aufbewahrungsfristen gespeichert und dann nach Fristablauf gelöscht, sofern Sie der weitergehenden Verarbeitung und Nutzung nicht zugestimmt haben.</p>
+
+      <p><strong>Rechte der betroffenen Person</strong><br />
+      Ihnen stehen bei Vorliegen der gesetzlichen Voraussetzungen folgende Rechte nach Art. 15 bis 20 DSGVO zu: Recht auf Auskunft, auf Berichtigung, auf Löschung, auf Einschränkung der Verarbeitung, auf Datenübertragbarkeit.</p>
+      <p>Außerdem steht Ihnen nach Art. 21 Abs. 1 DSGVO ein Widerspruchsrecht gegen die Verarbeitungen zu, die auf Art. 6 Abs. 1 f DSGVO beruhen, sowie gegen die Verarbeitung zum Zwecke von Direktwerbung.</p>
+
+      <h3>Beschwerderecht bei der Aufsichtsbehörde</h3>
+      <p>Sie haben gemäß Art. 77 DSGVO das Recht, sich bei der Aufsichtsbehörde zu beschweren, wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer personenbezogenen Daten nicht rechtmäßig erfolgt.</p>
+
+      <h3>Widerspruchsrecht</h3>
+      <p>Beruhen die hier aufgeführten personenbezogenen Datenverarbeitungen auf Grundlage unseres berechtigten Interesses nach Art. 6 Abs. 1 lit. f DSGVO, haben Sie das Recht aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit diesen Verarbeitungen mit Wirkung für die Zukunft zu widersprechen.</p>
+      <p>Nach erfolgtem Widerspruch wird die Verarbeitung der betroffenen Daten beendet, es sei denn, wir können zwingende schutzwürdige Gründe für die Verarbeitung nachweisen, die Ihren Interessen, Rechten und Freiheiten überwiegen, oder wenn die Verarbeitung der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen dient.</p>
+
+      <p><em>letzte Aktualisierung: 29.11.2023</em></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Modal-Logik
+  const linkImpressum = document.getElementById('link-impressum');
+  const linkDatenschutz = document.getElementById('link-datenschutz');
+  const modalImpressum = document.getElementById('modal-impressum');
+  const modalDatenschutz = document.getElementById('modal-datenschutz');
+
+  function openModal(modal) {
+    if (modal) {
+      modal.classList.add('active');
+    }
+  }
+
+  function closeModal(modal) {
+    if (modal) {
+      modal.classList.remove('active');
+    }
+  }
+
+  linkImpressum.addEventListener('click', () => openModal(modalImpressum));
+  linkDatenschutz.addEventListener('click', () => openModal(modalDatenschutz));
+
+  document.querySelectorAll('.modal-close').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const overlay = btn.closest('.modal-overlay');
+      closeModal(overlay);
+    });
+  });
+
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeModal(overlay);
+      }
+    });
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal(modalImpressum);
+      closeModal(modalDatenschutz);
+    }
+  });
+</script>
+</body>
+</html>
